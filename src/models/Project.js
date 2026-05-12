@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { PROJECT_ROLES } from '../constants/index.js';
 
 const projectMemberSchema = new mongoose.Schema(
   {
@@ -9,7 +10,7 @@ const projectMemberSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['owner', 'member'],
+      enum: PROJECT_ROLES,
       default: 'member'
     }
   },
