@@ -5,8 +5,7 @@ import {
   getPagination
 } from '../utils/pagination.js';
 
-const userSelect =
-  'name email createdAt';
+const userSelect = 'name email createdAt';
 
 export const getUserId = (
   value

@@ -1,7 +1,6 @@
 import { TASK_PRIORITIES, TASK_STATUSES } from '../constants/index.js';
 import  Task  from '../models/Task.js';
 import { createPaginationMeta, getPagination } from '../utils/pagination.js';
-
 import {
   findProjectForUser,
   getUserId,
@@ -32,11 +31,7 @@ const populateTask = (query) =>
     .populate('createdBy', userSelect)
     .populate('updatedBy', userSelect);
 
-export const getTasksForProject = async (
-  projectId,
-  userId,
-  query
-) => {
+export const getTasksForProject = async ( projectId, userId, query ) => {
   await findProjectForUser(projectId, userId);
 
   const { page, limit, skip } = getPagination(query);
@@ -97,11 +92,7 @@ export const getTasksForProject = async (
   };
 };
 
-export const createTaskForProject = async (
-  projectId,
-  userId,
-  payload
-) => {
+export const createTaskForProject = async ( projectId, userId, payload ) => {
   const project = await findProjectForUser(
     projectId,
     userId
@@ -129,10 +120,7 @@ export const createTaskForProject = async (
   );
 };
 
-export const findTaskForUser = async (
-  taskId,
-  userId
-) => {
+export const findTaskForUser = async ( taskId, userId ) => {
   const task = await populateTask(
     Task.findById(taskId)
   );
@@ -153,11 +141,7 @@ export const findTaskForUser = async (
   return { task, project };
 };
 
-export const updateTaskForUser = async (
-  taskId,
-  userId,
-  payload
-) => {
+export const updateTaskForUser = async ( taskId, userId, payload ) => {
   const { task, project } =
     await findTaskForUser(taskId, userId);
 
@@ -168,14 +152,7 @@ export const updateTaskForUser = async (
     );
   }
 
-  const allowedFields = [
-    'title',
-    'description',
-    'priority',
-    'dueDate',
-    'assignedTo',
-    'status'
-  ];
+  const allowedFields = [ 'title', 'description', 'priority', 'dueDate', 'assignedTo', 'status'];
 
   allowedFields.forEach((field) => {
     if (payload[field] !== undefined) {
@@ -192,14 +169,8 @@ export const updateTaskForUser = async (
   );
 };
 
-export const deleteTaskForUser = async (
-  taskId,
-  userId
-) => {
-  const { task } = await findTaskForUser(
-    taskId,
-    userId
-  );
+export const deleteTaskForUser = async ( taskId, userId ) => {
+  const { task } = await findTaskForUser( taskId, userId );
 
   await task.deleteOne();
 
